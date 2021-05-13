@@ -1,0 +1,29 @@
+{
+  "name": "resthub2",
+  "version": "2.0.0",
+  "description": "A Node App demonstrating simple RESTFul API implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "API",
+    "resful",
+    "json",
+    "node",
+    "mongodb",
+    "express"
+  ],
+  "author": "David Inyang-Etoh",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "csv-parse": "^4.15.4",
+    "csv-parser": "^3.0.0",
+    "csvtojson": "^2.0.10",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "mongoose": "^5.6.4"
+  }
+}

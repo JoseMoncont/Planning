@@ -5,7 +5,7 @@ let bodyParser = require('body-parser');
 // Import Mongoose
 let mongoose = require('mongoose');
 // Import fileUpload tool
-let fileUpload = require('express-fileupload')
+
 
 // Initialize the app
 let app = express();
@@ -18,7 +18,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.use(fileUpload());
 
 // Setup server port
 var port = process.env.PORT || 3000;
@@ -27,7 +26,6 @@ var port = process.env.PORT || 3000;
 require("./config/db")
 
 
-// i
 
 // Send message for default URL
 app.get('/', (req, res) => res.send('Hello World with Express'));

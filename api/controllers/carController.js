@@ -3,6 +3,11 @@
 const Car = require('../models/carModel');
 const path = require('path');
 const util = require('util')
+const multer = require('multer');
+const csv = require('csv-parser');
+const fs = require('fs')
+
+const upload = multer({ dest: 'tmp/csv/' });
 
 
 // Handle index actions
@@ -49,7 +54,7 @@ exports.new = function (req, res) {
 };
 // Handle view contact info
 exports.view = function (req, res) {
-    Car.findById(req.params.cars_id, function (err, car) {
+    Car.findById(req.params.car_id, function (err, car) {
         if (err)
             res.send(err);
         res.json({
@@ -59,9 +64,24 @@ exports.view = function (req, res) {
     });
 };
 
+exports.view_plate = function (req, res) {
+    let args = [
+        { $match: { placa: req.params.plate}}
+    ]
+    Car.aggregate(args, function (err, car_jobs) {
+        if (err)
+            res.send(err);
+        res.json({
+            message: 'Car planning details loading..',
+            data: car_jobs
+        });
+    });
+};
+
+
 // Handle update car info
 exports.update = function (req, res) {
-    Car.findById(req.params.cars_id, function (err, car) {
+    Car.findById(req.params.car_id, function (err, car) {
         if (err)
             res.send(err);
 
@@ -74,7 +94,7 @@ exports.update = function (req, res) {
         car.descripcion = req.body.descripcion
         car.procedimiento = req.body.procedimiento
         car.estado = req.body.estado
- 
+
 // save the contact and check for errors
         car.save(function (err) {
             if (err)
@@ -89,7 +109,7 @@ exports.update = function (req, res) {
 // Handle delete car
 exports.delete = function (req, res) {
     Car.deleteOne({
-        _id: req.params.cars_id
+        _id: req.params.car_id
     }, function (err, car) {
         if (err)
             res.send(err);
@@ -100,3 +120,15 @@ exports.delete = function (req, res) {
     });
 };
 
+exports.upload_csv = function (req, res) {
+    var cars = []
+    fs.createReadStream('./planning.csv')
+        .pipe(csv( {skipLines: 2}))
+        .on('data', (row) => {
+            cars.push(row)
+        })
+        .on('end', () => {
+            console.log(cars);
+        });
+    
+};

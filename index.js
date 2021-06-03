@@ -18,6 +18,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+// Configure CORS Access
+var cors = require('cors');
+app.use(cors())
 
 // Setup server port
 var port = process.env.PORT || 3000;
